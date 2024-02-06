@@ -37,7 +37,7 @@ original_copy = random_numbers.copy()
 order_choice = input("\n¿Quieres ordenar la lista ascendente (A) o descendentemente (D)? ").upper()
 
 # Validar la elección del usuario
-if order_choice == 'A':
+if order_choice  == 'A':
     selection_sort(random_numbers, ascending=True)
     print("\nLista ordenada de forma ascendente:")
 elif order_choice == 'D':
