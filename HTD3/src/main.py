@@ -2,7 +2,7 @@ import random, sorts, timeit
 
 def generatorRandom():
     
-    array = [random.randint(1,10000) for j in range(3000)]
+    array = [random.randint(1,10000) for j in range(10)]
     
 
     return array
