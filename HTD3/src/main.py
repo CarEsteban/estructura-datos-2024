@@ -8,13 +8,14 @@ def generatorRandom():
     return array
 
 numerosAleatorios = generatorRandom()
+ascDescBoolean = False
 
 if __name__ == "__main__":
-    print(sorts.quickSort(numerosAleatorios,0,len(numerosAleatorios)-1))
-    print(sorts.gnome_sort(numerosAleatorios))
-    print(sorts.heapSort(numerosAleatorios))
-    print(sorts.mergeSort(numerosAleatorios))
-    print(sorts.radixSort(numerosAleatorios))
-    print(sorts.selectionSort(numerosAleatorios))
-    print(sorts.shellSort(numerosAleatorios))
+    print(sorts.quickSort(numerosAleatorios,0,len(numerosAleatorios)-1,ascDescBoolean))
+    print(sorts.gnomeSort(numerosAleatorios,ascDescBoolean))
+    print(sorts.heapSort(numerosAleatorios,ascDescBoolean))
+    print(sorts.mergeSort(numerosAleatorios,ascDescBoolean))
+    print(sorts.radixSort(numerosAleatorios,ascDescBoolean))
+    print(sorts.selectionSort(numerosAleatorios,ascDescBoolean))
+    print(sorts.shellSort(numerosAleatorios,ascDescBoolean))
 
