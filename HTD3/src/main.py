@@ -7,6 +7,7 @@ def generatorRandom():
 
     return array
 
+#Se le pidió a la IA que creara una función para medir el tiempo, ya que Austin Profiler no funcionaba
 def run_algorithms(numerosAleatorios, ascDescBoolean):
 
     start_time = timeit.default_timer()
