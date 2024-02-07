@@ -2,6 +2,7 @@ import sys
 import os
 
 # Añade el directorio src al sys.path
+#generado por IA para que corriera el test
 script_dir = os.path.dirname(__file__)  # Obtiene el directorio del script
 parent_dir = os.path.join(script_dir, os.pardir, 'src')  # Navega al directorio src
 sys.path.insert(0, os.path.abspath(parent_dir))
