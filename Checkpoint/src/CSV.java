@@ -6,10 +6,9 @@ public class CSV implements IDataSource {
 
     @Override
     public File saveUsers(List<IUser> users, String path) {
-        File file = new File(path+".csv");
-        try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
+        File file = new File(path + ".csv");
+        try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) { 
             for (IUser user : users) {
-                // Escribe el tipo de usuario (necesitarás una lógica aquí para determinar el número basado en el tipo de clase), ID, nombre y apellido en el CSV
                 String line = getTypeFromUser(user) + "," + user.getId() + "," + user.getFirstName() + "," + user.getLastName();
                 pw.println(line);
             }
