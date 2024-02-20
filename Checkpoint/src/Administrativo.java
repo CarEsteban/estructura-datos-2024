@@ -2,6 +2,7 @@ public class Administrativo implements IUser {
     private String firstName;
     private String lastName;
     private int id;
+    private String type ="Administrativo";
 
     // Implementación de los métodos de IUser
     @Override
@@ -21,6 +22,13 @@ public class Administrativo implements IUser {
 
     @Override
     public void setId(int id) { this.id = id; }
+
+
+    @Override
+    public String getType() {
+        return type;
+    }
+
 
     @Override
     public void showOptions() {

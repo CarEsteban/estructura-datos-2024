@@ -3,6 +3,7 @@ public class Auditor implements IUser {
     private String firstName;
     private String lastName;
     private int id;
+    private String type ="Auditor";
 
     // Implementación de los métodos de IUser
     @Override
@@ -23,6 +24,13 @@ public class Auditor implements IUser {
     @Override
     public void setId(int id) { this.id = id; }
 
+
+
+    @Override
+    public String getType() {
+        return type;
+    }
+    
     @Override
     public void showOptions() {
         // Implementación específica para Auditor
