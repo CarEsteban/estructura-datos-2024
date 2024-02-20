@@ -45,8 +45,11 @@ public class Auditor implements IUser {
     }
     @Override
     public void showOptions() {
-        // Implementación específica para Auditor
-        System.out.println("Opciones de Auditor");
+        System.out.println("Menú Auditor Externo:");
+        System.out.println("1. Revisar notas");
+        System.out.println("2. Revisar cuotas pagadas de estudiantes");
+        System.out.println("3. Revisar Pagos a docentes");
+        System.out.println("4. Salir");
     }
     
 }

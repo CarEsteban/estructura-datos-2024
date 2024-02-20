@@ -47,7 +47,10 @@ public class Docente implements IUser {
     
     @Override
     public void showOptions() {
-        // Implementación específica para Docente
-        System.out.println("Opciones de Docente");
+        System.out.println("Menú Docente:");
+        System.out.println("1. Ingresar notas de los estudiantes en una clase específica");
+        System.out.println("2. Cobrar Pago");
+        System.out.println("3. Historial de Pagos");
+        System.out.println("4. Salir");
     }
 }

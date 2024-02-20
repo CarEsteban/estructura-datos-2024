@@ -46,8 +46,13 @@ public class Administrativo implements IUser {
 
     @Override
     public void showOptions() {
-        // Implementación específica para Administrativo
-        System.out.println("Opciones de Administrativo");
+        System.out.println("Menú Personal Administrativo:");
+        System.out.println("1. Crear Cursos, Docentes y Estudiantes");
+        System.out.println("2. Asignar estudiante a curso");
+        System.out.println("3. Asignar catedrático a curso");
+        System.out.println("4. Asignar pago a catedrático");
+        System.out.println("5. Resumen de Notas y Resumen de Pagos de Estudiantes");
+        System.out.println("6. Salir");
     }
     
 }

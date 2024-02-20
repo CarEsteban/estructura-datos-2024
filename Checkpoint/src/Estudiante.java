@@ -47,7 +47,10 @@ public class Estudiante implements IUser {
     
     @Override
     public void showOptions() {
-        // Implementación específica para Estudiante
-        System.out.println("Opciones de Estudiante");
+        System.out.println("Menú Estudiante:");
+        System.out.println("1. Consultar nota de una clase específica");
+        System.out.println("2. Realizar Pago");
+        System.out.println("3. Consultar Pagos");
+        System.out.println("4. Salir");
     }
 }

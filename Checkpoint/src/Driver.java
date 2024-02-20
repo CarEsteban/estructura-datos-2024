@@ -7,7 +7,7 @@ public class Driver {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int option,validation;
+        int option,userIndex,subOption;
         boolean continuar = true;
         UsuarioFactory userFactory = new UsuarioFactory(); 
         List<IUser> allUsers = new ArrayList<>();
@@ -19,19 +19,23 @@ public class Driver {
     
             switch (option) {
                 case 1:
-                    validation = iniciarSesion(scanner);
-                    if(validation==1){
+                    userIndex = iniciarSesion(scanner, allUsers);
+                    if (userIndex == -1) {
                         System.out.println("Lo siento, este usuario no existe");
                         break;
                     }
                     System.out.println("Ingresado");
+                    allUsers.get(userIndex).showOptions(); 
 
-                    //logica cuando se inicia sesion
+                    System.out.println("Desea volver al menú? (0-Si/1-No)");
+                    subOption=scanner.nextInt(); scanner.nextLine();
 
-
-
-
+                    if(subOption==1){
+                        continuar=false;
+                    }
+                    
                     break;
+
                 case 2:
                     crearCuenta(scanner, userFactory,allUsers);
                     System.out.println("Cuenta creada");
@@ -47,11 +51,6 @@ public class Driver {
             }
     
         }
-
-
-
-
-
 
     }
 
@@ -89,7 +88,7 @@ public class Driver {
 
         return option;
     }
-
+/* 
     private static int iniciarSesion(Scanner scanner){
         String firstName;
         System.out.println("Bienvenido al inicio de sesión\nIngrese su primer nombre:");
@@ -116,7 +115,21 @@ public class Driver {
         // Usuario no encontrado o archivos no existen
         return 1;
     }   
-
+*/
+    private static int iniciarSesion(Scanner scanner, List<IUser> allUsers) {
+        System.out.println("Bienvenido al inicio de sesión\nIngrese su primer nombre:");
+        String firstName = scanner.nextLine();
+    
+        // Itera sobre la lista de todos los usuarios cargados en memoria
+        for (int i = 0; i < allUsers.size(); i++) {
+            IUser user = allUsers.get(i);
+            if (user.getFirstName().equalsIgnoreCase(firstName)) {
+                return i; // Devuelve el índice del usuario encontrado
+            }
+        }
+        return -1; // Usuario no encontrado
+    }
+    
     private static void crearCuenta(Scanner scanner, UsuarioFactory userFactory, List<IUser> allUsers){
         System.out.println("Ingrese su nombre:");
         String firstName = scanner.nextLine();
