@@ -1,36 +1,48 @@
-public class Auditor implements IUser {
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "auditor")
+public class Auditor implements IUser {
+    private int id;
     private String firstName;
     private String lastName;
-    private int id;
-    private String type ="Auditor";
+    private String type="Auditor";
 
-    // Implementación de los métodos de IUser
-    @Override
-    public String getFirstName() { return firstName; }
+    public Auditor() {
+        // Constructor sin argumentos requerido por JAXB
+    }
 
-    @Override
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    @XmlElement(name = "id")
+    public int getId() {
+        return id;
+    }
 
-    @Override
-    public String getLastName() { return lastName; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    @Override
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    @XmlElement(name = "firstName")
+    public String getFirstName() {
+        return firstName;
+    }
 
-    @Override
-    public int getId() { return id; }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    @Override
-    public void setId(int id) { this.id = id; }
+    @XmlElement(name = "lastName")
+    public String getLastName() {
+        return lastName;
+    }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-
-    @Override
+    @XmlElement(name = "type")
     public String getType() {
         return type;
     }
-    
     @Override
     public void showOptions() {
         // Implementación específica para Auditor

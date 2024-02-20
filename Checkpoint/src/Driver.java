@@ -131,7 +131,7 @@ public class Driver {
         // Agrega el nuevo usuario directamente a la lista en memoria.
         allUsers.add(user);
         
-        System.out.println("Seleccione el formato para guardar la información (1-XML, 2-JSON, 3-CSV):");
+        System.out.println("Seleccione el formato para guardar la información (1-XML(no funciona, se guardará en CSV), 2-JSON, 3-CSV):");
         int formatType = Integer.parseInt(scanner.nextLine());
     
         // Llama a saveUser para guardar todos los usuarios, incluido el nuevo, en el archivo seleccionado.
@@ -150,7 +150,8 @@ public class Driver {
         switch (formatType) {
             case 1:
                 // Guardar en formato XML
-                new XML().saveUsers(allUsers, basePath + fileName);
+                //new XML().saveUsers(allUsers, basePath + fileName);
+                //en XML no se puede guardar entonces se vuelve a guardar en CSV
                 // siempre un archivo csv para poder iniciar el programa
                 new CSV().saveUsers(allUsers, basePath + fileName);
                 break;
