@@ -28,17 +28,25 @@ public class CSV implements IDataSource {
         List<IUser> users = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
+            boolean isFirstLine = true; // Agrega una bandera para identificar la primera línea
             while ((line = br.readLine()) != null) {
+                if (isFirstLine) {
+                    isFirstLine = false; // Ignora la primera línea (encabezado)
+                    continue;
+                }
                 String[] data = line.split(",");
-                // Asume que el primer elemento es el tipo, el segundo es el ID, el tercero el nombre, y el cuarto el apellido
-                IUser user = UsuarioFactory.createUser(Integer.parseInt(data[0]), data[2], data[3], Integer.parseInt(data[1]));
-                users.add(user);
+                // Asegúrate de que la línea tiene el número esperado de elementos
+                if (data.length >= 4) {
+                    IUser user = UsuarioFactory.createUser(Integer.parseInt(data[0]), data[2], data[3], Integer.parseInt(data[1]));
+                    users.add(user);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return users;
     }
+    
 
     // Método auxiliar para obtener el tipo numérico de usuario basado en la instancia de IUser
     private int getTypeFromUser(IUser user) {
