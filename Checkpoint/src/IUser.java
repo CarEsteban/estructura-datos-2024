@@ -9,6 +9,7 @@ public interface IUser {
     void setLastName(String lastName);
     int getId();
     void setId(int id);
+    String getType();
 
     void showOptions();
 } 
