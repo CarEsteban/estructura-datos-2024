@@ -7,7 +7,11 @@ public class CSV implements IDataSource {
     @Override
     public File saveUsers(List<IUser> users, String path) {
         File file = new File(path + ".csv");
-        try (PrintWriter pw = new PrintWriter(new FileWriter(file, true))) { 
+        try (PrintWriter pw = new PrintWriter(new FileWriter(file))) {
+            // Escribe el encabezado del CSV
+            pw.println("Tipo,ID,Nombre,Apellido");
+    
+            // Itera sobre los usuarios y escribe sus datos
             for (IUser user : users) {
                 String line = getTypeFromUser(user) + "," + user.getId() + "," + user.getFirstName() + "," + user.getLastName();
                 pw.println(line);
@@ -17,6 +21,7 @@ public class CSV implements IDataSource {
         }
         return file;
     }
+    
 
     @Override
     public List<IUser> getUsersFromFile(File file, int fileType) {

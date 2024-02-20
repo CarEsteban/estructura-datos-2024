@@ -10,6 +10,9 @@ public class Driver {
         int option,validation;
         boolean continuar = true;
         UsuarioFactory userFactory = new UsuarioFactory(); 
+        List<IUser> allUsers = new ArrayList<>();
+
+        allUsers = loadAllUsers();
 
         while (continuar) {
             option = menu(scanner);
@@ -30,7 +33,7 @@ public class Driver {
 
                     break;
                 case 2:
-                    crearCuenta(scanner, userFactory);
+                    crearCuenta(scanner, userFactory,allUsers);
                     System.out.println("Cuenta creada");
 
 
@@ -52,6 +55,26 @@ public class Driver {
 
     }
 
+    //siempre se carga un csv ya que es el formato más estable
+    public static List<IUser> loadAllUsers() {
+        List<IUser> allUsers = new ArrayList<>();
+        String basePath = "./files/";
+        String fileName = "usuarios.csv"; // Nombre del archivo CSV
+        File file = new File(basePath + File.separator + fileName);
+    
+        // Verifica si el archivo CSV existe
+        if (file.exists()) {
+            CSV csvDataSource = new CSV();
+            List<IUser> users = csvDataSource.getUsersFromFile(file, 0);
+            allUsers.addAll(users);
+        } else {
+            // Muestra un mensaje de error si el archivo CSV no existe
+            System.out.println("Error: Es necesario tener un archivo CSV para iniciar el programa.");
+            System.exit(0);
+        }
+        return allUsers;
+    }
+    
 
     private static int menu(Scanner scanner){
         int option;
@@ -94,7 +117,7 @@ public class Driver {
         return 1;
     }   
 
-    private static void crearCuenta(Scanner scanner, UsuarioFactory userFactory){
+    private static void crearCuenta(Scanner scanner, UsuarioFactory userFactory, List<IUser> allUsers){
         System.out.println("Ingrese su nombre:");
         String firstName = scanner.nextLine();
         System.out.println("Ingrese su apellido:");
@@ -103,46 +126,51 @@ public class Driver {
         int id = Integer.parseInt(scanner.nextLine());
         System.out.println("Ingrese el tipo de usuario (1-Estudiante, 2-Docente, 3-Auditor, 4-Administrativo):");
         int userType = Integer.parseInt(scanner.nextLine());
+    
+        IUser user = UsuarioFactory.createUser(userType, firstName, lastName, id);
+        // Agrega el nuevo usuario directamente a la lista en memoria.
+        allUsers.add(user);
+        
         System.out.println("Seleccione el formato para guardar la información (1-XML, 2-JSON, 3-CSV):");
         int formatType = Integer.parseInt(scanner.nextLine());
     
-        IUser user = UsuarioFactory.createUser(userType, firstName, lastName, id);
-        saveUser(user,formatType);
+        // Llama a saveUser para guardar todos los usuarios, incluido el nuevo, en el archivo seleccionado.
+        saveUser(formatType,allUsers);
     }
 
-    
-    private static void saveUser(IUser user, int formatType) {
-        List<IUser> users = new ArrayList<>();
-        users.add(user);
-    
+    private static void saveUser(int formatType, List<IUser> allUsers) {
         String basePath = "./files/";
-        File directory = new File(basePath);
-        if (!directory.exists()) {
-            if (!directory.mkdirs()) {
-                System.out.println("No se pudo crear el directorio de archivos.");
-                return; 
-            }
-        }
+        String fileName = "usuarios";
         
+        // Selecciona la extensión de archivo basada en el tipo de formato
+        String fileExtension = formatType == 1 ? ".xml" : formatType == 2 ? ".json" : formatType == 3 ? ".csv" : "";
+        File file = new File(basePath + fileName + fileExtension);
+    
         // Guardar según el formato seleccionado
         switch (formatType) {
             case 1:
                 // Guardar en formato XML
-                new XML().saveUsers(users, basePath + "usuarios");
+                new XML().saveUsers(allUsers, basePath + fileName);
+                // siempre un archivo csv para poder iniciar el programa
+                new CSV().saveUsers(allUsers, basePath + fileName);
                 break;
             case 2:
                 // Guardar en formato JSON
-                new JSON().saveUsers(users, basePath + "usuarios");
+                new JSON().saveUsers(allUsers, basePath + fileName);
+                // siempre un archivo csv para poder iniciar el programa
+                new CSV().saveUsers(allUsers, basePath + fileName);
                 break;
             case 3:
-                // Guardar en formato CSV
-                new CSV().saveUsers(users, basePath + "usuarios");
+                // siempre un archivo csv para poder iniciar el programa
+                new CSV().saveUsers(allUsers, basePath + fileName);
                 break;
             default:
                 System.out.println("Formato no válido. Por favor seleccione un formato entre 1 y 3.");
                 break;
         }
     }
+    
+    
 
 
 }
