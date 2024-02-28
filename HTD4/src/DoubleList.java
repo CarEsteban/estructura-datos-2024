@@ -107,15 +107,15 @@ public class DoubleList<T> implements IListBasedStack<T> {
         Node<T> newNode = new Node<>(item);
         if (isEmpty()) {
             head = newNode;
+            tail = newNode;
         } else {
-            Node<T> current = head;
-            while (current.next != null) {
-                current = current.next;
-            }
-            current.next = newNode;
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
         }
         size++;
     }
+    
     
 
     @Override
@@ -143,5 +143,6 @@ public class DoubleList<T> implements IListBasedStack<T> {
         }
         return tail.data;
     }
+    
     
 }
