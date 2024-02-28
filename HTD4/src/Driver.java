@@ -1,4 +1,7 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class Driver{
     public static void main(String[] args) {
@@ -44,15 +47,19 @@ public class Driver{
 
     }
 
-    //aqui crear la logica del infix a profix
-    //para poder aplicarlo despues que se instancia cada data structure
-    public static void AplicacionInfixAPostfix(IStack stack){
+    public static void AplicacionInfixAPostfix(IStack<Character> stack){
         ShutingYard sy = new ShutingYard(stack);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese la expresion infija:");
-        String expression = scanner.nextLine();
-        sy.parseExpression(expression);
-        System.out.println("Expresion postfija: " + sy.output());
+        InputStream inputStream = Driver.class.getResourceAsStream("/datos.txt");
+        if (inputStream == null) {
+            throw new IllegalArgumentException("El archivo datos.txt no se encontró en el classpath");
+        }
+        Scanner scanner = new Scanner(inputStream);
+        while (scanner.hasNextLine()) {
+            String expression = scanner.nextLine();
+            System.out.println("Leyendo expresión infija del archivo: " + expression);
+            sy.parseExpression(expression);
+            System.out.println("Expresión postfija: " + sy.output());
+        }
         scanner.close();
     }
 }
