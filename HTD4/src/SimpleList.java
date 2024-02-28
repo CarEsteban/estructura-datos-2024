@@ -77,19 +77,53 @@ public class SimpleList<T> implements IListBasedStack<T> {
 
     @Override
     public void push(T item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'push'");
+        Node<T> newNode = new Node<>(item);
+        if (isEmpty()) {
+            head = newNode;
+        } else {
+            Node<T> current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+        size++;
     }
+    
 
     @Override
     public T pop() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pop'");
+        if (isEmpty()) {
+            throw new IllegalStateException("La lista está vacía");
+        }
+        if (size == 1) {
+            T item = head.data;
+            head = null;
+            size--;
+            return item;
+        } else {
+            Node<T> current = head;
+            while (current.next.next != null) {
+                current = current.next;
+            }
+            T item = current.next.data;
+            current.next = null;
+            size--;
+            return item;
+        }
     }
+    
 
     @Override
     public T peek() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'peek'");
+        if (isEmpty()) {
+            throw new IllegalStateException("La lista está vacía");
+        }
+        Node<T> current = head;
+        while (current.next != null) {
+            current = current.next;
+        }
+        return current.data;
     }
+    
 }

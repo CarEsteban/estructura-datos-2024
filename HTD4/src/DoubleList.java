@@ -104,19 +104,44 @@ public class DoubleList<T> implements IListBasedStack<T> {
 
     @Override
     public void push(T item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'push'");
+        Node<T> newNode = new Node<>(item);
+        if (isEmpty()) {
+            head = newNode;
+        } else {
+            Node<T> current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+        size++;
     }
+    
 
     @Override
     public T pop() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pop'");
+        if (isEmpty()) {
+            throw new IllegalStateException("La lista está vacía");
+        }
+        T item = tail.data;
+        if (size == 1) {
+            head = null;
+            tail = null;
+        } else {
+            tail = tail.prev;
+            tail.next = null;
+        }
+        size--;
+        return item;
     }
+    
 
     @Override
     public T peek() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'peek'");
+        if (isEmpty()) {
+            throw new IllegalStateException("La lista está vacía");
+        }
+        return tail.data;
     }
+    
 }
