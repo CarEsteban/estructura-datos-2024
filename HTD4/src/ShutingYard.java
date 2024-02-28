@@ -1,9 +1,12 @@
-import java.util.Stack;
 
 public class ShutingYard {
-    private Stack<Character> operatorStack = new Stack<>();
+    private IStack<Character> operatorStack;
     private StringBuilder postfix = new StringBuilder();
 
+    public ShutingYard(IStack<Character> operatorStack) {
+        this.operatorStack = operatorStack;
+    }
+    
     public void parseExpression(String expression) {
         for (char token : expression.toCharArray()) {
             if (Character.isDigit(token)) {
