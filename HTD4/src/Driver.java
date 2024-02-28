@@ -15,9 +15,11 @@ public class Driver {
         switch (opc) {
             case 1:
                 stack = StackFactory.createStack(StackFactory.StackType.ARRAY_LIST);
+                AplicacionInfixAProfix();
                 break;
             case 2:
                 stack = StackFactory.createStack(StackFactory.StackType.VECTOR);
+                AplicacionInfixAProfix();   
                 break;
             case 3:
                 System.out.println("Seleccione el tipo de lista:");
@@ -27,8 +29,10 @@ public class Driver {
                 int listChoice = scanner.nextInt();
                 if (listChoice == 1) {
                     stack = StackFactory.createStack(StackFactory.StackType.SIMPLE_LIST);
+                    AplicacionInfixAProfix();
                 } else if (listChoice == 2) {
                     stack = StackFactory.createStack(StackFactory.StackType.DOUBLE_LIST);
+                    AplicacionInfixAProfix();
                 } else {
                     throw new IllegalArgumentException("Tipo de lista no válido.");
                 }
@@ -37,6 +41,12 @@ public class Driver {
                 throw new IllegalArgumentException("Tipo de estructura de datos no válido.");
         }
 
+
+    }
+
+    //aqui crear la logica del infix a profix
+    //para poder aplicarlo despues que se instancia cada data structure
+    public static void AplicacionInfixAProfix(){
 
     }
 }
