@@ -10,7 +10,7 @@ public class Driver{
         System.out.println("3. Lista");
 
         int opc = scanner.nextInt();
-        IStack stack;
+        IStack<Character> stack;
 
         switch (opc) {
             case 1:
