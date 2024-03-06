@@ -2,47 +2,45 @@ import simpy
 import random
 import statistics
 
-# Configuraciones de la simulación
-TIEMPO_SIMULACION = 100
-NUM_PROCESOS = 25  # Varía este número para 50, 100, 150, 200
-CAPACIDAD_RAM = 100  # Ajusta según necesites
-VELOCIDAD_CPU = 10  # Ajusta según necesites
+# Configuraciones iniciales
+CAPACIDAD_RAM = 100
+VELOCIDAD_CPU = 10
 INSTRUCCIONES_POR_CICLO = 3
+TIEMPO_SIMULACION = 100
+CANTIDAD_PROCESOS = [25, 50, 100, 150, 200]  # Procesos a simular
 
-tiempos = []
+resultados = []
 
 def proceso(nombre, env, cpu, ram, num_instrucciones, memoria_necesaria):
-    # Registro de llegada
     tiempo_llegada = env.now
-    print(f'{nombre} llega a {tiempo_llegada}')
     with ram.get(memoria_necesaria) as req:
         yield req
-        # Inicio de ejecución
-        print(f'{nombre} obtuvo memoria a {env.now}, instrucciones: {num_instrucciones}, memoria necesaria: {memoria_necesaria}')
+        inicio = env.now
         while num_instrucciones > 0:
             with cpu.request() as req_cpu:
                 yield req_cpu
-                # Ejecuta instrucciones
                 ejecutadas = min(num_instrucciones, INSTRUCCIONES_POR_CICLO)
                 yield env.timeout(ejecutadas / VELOCIDAD_CPU)
                 num_instrucciones -= ejecutadas
-                print(f'{nombre} ejecutó {ejecutadas} instrucciones. Restan {num_instrucciones} a {env.now}')
-                if num_instrucciones > 0:
-                    yield env.timeout(1)  # Simula espera por E/S
-        print(f'{nombre} terminó a {env.now}')
-        tiempos.append(env.now - tiempo_llegada)
+            if num_instrucciones > 0:
+                yield env.timeout(1)  # Simula espera por E/S
+        tiempos.append(env.now - inicio)
 
-env = simpy.Environment()
-ram = simpy.Container(env, CAPACIDAD_RAM, init=CAPACIDAD_RAM)
-cpu = simpy.Resource(env, capacity=1)
+for num_procesos in CANTIDAD_PROCESOS:
+    env = simpy.Environment()
+    ram = simpy.Container(env, CAPACIDAD_RAM, init=CAPACIDAD_RAM)
+    cpu = simpy.Resource(env, capacity=1)
+    tiempos = []
 
-for i in range(NUM_PROCESOS):
-    t_instrucciones = random.randint(1, 10)
-    mem_necesaria = random.randint(1, 10)
-    env.process(proceso(f'Proceso {i}', env, cpu, ram, t_instrucciones, mem_necesaria))
+    for i in range(num_procesos):
+        t_instrucciones = random.randint(1, 10)
+        mem_necesaria = random.randint(1, 10)
+        env.process(proceso(f'Proceso {i}', env, cpu, ram, t_instrucciones, mem_necesaria))
 
-env.run(until=TIEMPO_SIMULACION)
+    env.run(until=TIEMPO_SIMULACION)
+    promedio = round(statistics.mean(tiempos), 2)
+    desviacion = round(statistics.stdev(tiempos), 2) if len(tiempos) > 1 else 0
+    resultados.append((num_procesos, promedio, desviacion))
 
-# Análisis de resultados
-print(f'Tiempo promedio: {statistics.mean(tiempos)}')
-print(f'Desviación estándar: {statistics.stdev(tiempos)}')
+for resultado in resultados:
+    print(f'Procesos: {resultado[0]}, Tiempo promedio: {resultado[1]}, Desviación estándar: {resultado[2]}')
