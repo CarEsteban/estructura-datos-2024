@@ -15,9 +15,39 @@ TIEMPOS = {}  # Diccionario para guardar los resultados
 random.seed(RANDOM_SEED)
 
 # Función para crear los procesos
-def proceso(env, nombre, cpu, ram, tiempo_creacion):
-    # Implementar la lógica del proceso
-    yield env.timeout(tiempo_creacion)
+
+def proceso(env, nombre, cpu, ram, numero_instrucciones, intervalo):
+    memoria_requerida = random.randint(1, 10)
+    
+    # NEW: El proceso llega y solicita memoria
+    yield ram.get(memoria_requerida)
+    print(f'{env.now}: El proceso {nombre} ha llegado al sistema y ha obtenido {memoria_requerida} de RAM')
+    
+    # READY: El proceso está listo para ser atendido por el CPU
+    with cpu.request() as req:
+        yield req
+        # RUNNING: El CPU atiende al proceso
+        while numero_instrucciones > 0:
+            print(f'{env.now}: El proceso {nombre} está en ejecución')
+            # Ejecutar el proceso tantas veces como instrucciones por unidad de tiempo permita el CPU
+            yield env.timeout(1)
+            numero_instrucciones -= min(numero_instrucciones, cpu_instrucciones_por_unidad)
+            print(f'{env.now}: Al proceso {nombre} le quedan {numero_instrucciones} instrucciones')
+            
+            # Verificar si el proceso ha terminado
+            if numero_instrucciones <= 0:
+                print(f'{env.now}: El proceso {nombre} ha terminado')
+                break
+            
+            # Simular I/O operation de manera aleatoria
+            if random.randint(1, 21) == 1:
+                print(f'{env.now}: El proceso {nombre} está en waiting por I/O')
+                yield env.timeout(1)  # Tiempo que pasa haciendo I/O
+    
+    # El proceso ha terminado y libera la memoria RAM
+    yield ram.put(memoria_requerida)
+    print(f'{env.now}: El proceso {nombre} ha liberado {memoria_requerida} de RAM y ha salido del sistema')
+
 
 # Función para correr la simulación
 def ejecutar_simulacion(env, num_procesos, intervalo, cpu_instrucciones_por_unidad, memoria_ram_inicial, capacidad_cpu):
