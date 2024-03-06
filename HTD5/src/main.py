@@ -1,5 +1,6 @@
 import simpy
 import random
+import numpy as np
 import matplotlib.pyplot as plt
 
 # Configuraciones iniciales de la simulación
@@ -62,27 +63,32 @@ def ejecutar_simulacion(env, num_procesos, intervalo, cpu_instrucciones_por_unid
 
 # Función para realizar la simulación con distintas configuraciones y generar gráficas
 def realizar_simulaciones_y_graficas():
-    for num_proceso in NUM_PROCESOS:
-        for intervalo in INTERVALOS:
-            # Resetear la semilla aleatoria para reproducibilidad
-            random.seed(RANDOM_SEED)
+    global tiempos_procesos
+    resultados = {}
 
-            # Crear un ambiente de simulación y ejecutar
+    for num_procesos in [25, 50, 100, 150, 200]:  # Diferentes cantidades de procesos
+        tiempos_procesos = {}  # Diccionario para registrar tiempos de cada proceso
+
+        # Correr la simulación para cada intervalo
+        for intervalo in INTERVALOS:
             env = simpy.Environment()
-            env.process(ejecutar_simulacion(env, num_proceso, intervalo, CPU_INSTRUCCIONES_POR_UNIDAD, MEMORIA_RAM_INICIAL, CAPACIDAD_CPU))
+            env.process(ejecutar_simulacion(env, num_procesos, intervalo))
             env.run()
 
-            # Aquí iría la lógica para registrar los tiempos y realizar cálculos
+        # Calcular estadísticas
+        tiempos_totales = list(tiempos_procesos.values())
+        promedio = np.mean(tiempos_totales)
+        desviacion_std = np.std(tiempos_totales)
+        resultados[num_procesos] = {'promedio': promedio, 'desviacion_std': desviacion_std}
 
-    # Después de correr todas las simulaciones, generar gráficas
-    for key, values in TIEMPOS.items():
-        # Generar gráficas con matplotlib
-        plt.figure()
-        plt.plot(values['procesos'], values['tiempo_promedio'])
-        plt.title(f'Simulación con {key}')
-        plt.xlabel('Número de procesos')
-        plt.ylabel('Tiempo promedio en sistema')
-        plt.savefig(f'simulacion_{key}.png')
+        # Graficar
+        plt.errorbar(resultados.keys(), [r['promedio'] for r in resultados.values()], 
+                     yerr=[r['desviacion_std'] for r in resultados.values()], fmt='-o')
+    
+    plt.title('Tiempo promedio y desviación estándar por número de procesos')
+    plt.xlabel('Número de procesos')
+    plt.ylabel('Tiempo promedio en el sistema')
+    plt.show()
 
 # Llamar a la función principal para correr todo el programa
 realizar_simulaciones_y_graficas()
