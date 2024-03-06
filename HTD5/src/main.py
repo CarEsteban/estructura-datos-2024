@@ -1,6 +1,7 @@
 import simpy
 import random
 import statistics
+import matplotlib.pyplot as plt  # Importa Matplotlib para la graficación
 
 # Configuraciones de la simulación
 TIEMPO_SIMULACION = 1000  # Aumentar para permitir más tiempo de procesamiento
@@ -41,3 +42,19 @@ for n in CANTIDAD_PROCESOS:
 
 for resultado in resultados:
     print(f'Procesos: {resultado[0]}, Tiempo promedio: {resultado[1]}, Desviación estándar: {resultado[2]}')
+
+# Datos para la gráfica
+cantidad_procesos = [resultado[0] for resultado in resultados]
+tiempo_promedio = [resultado[1] for resultado in resultados]
+
+# Creación de la gráfica
+plt.figure(figsize=(10, 6))
+plt.plot(cantidad_procesos, tiempo_promedio, marker='o', linestyle='-', color='b')
+plt.title('Tiempo promedio de ejecución por cantidad de procesos')
+plt.xlabel('Cantidad de Procesos')
+plt.ylabel('Tiempo Promedio (s)')
+plt.grid(True)
+plt.xticks(cantidad_procesos)
+
+# Mostrar la gráfica
+plt.show()
