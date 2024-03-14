@@ -7,16 +7,17 @@ public class Main {
         Estudiante estudiante ;
 
         //factories
-        FactoryMaps<IHash,Estudiante> factoryMaps = new FactoryMaps<>();
+        FactoryMaps<String,Estudiante> factoryMaps = new FactoryMaps<>();
         FactoryHash factoryHash = new FactoryHash();
 
+        LectorArchivo lectorArchivo = new LectorArchivo(factoryMaps);
+
         //instances
-        AbstractMap<IHash,Estudiante> map;
+        AbstractMap<String,Estudiante> map,mapWithStudents;
         IHash hashMethod;
 
         int selectionMap,selectionHash;
         boolean keep = true;
-
 
         while (keep) {
             System.out.println("Ingrese que tipo de mapa desea trabajar: 1)HashMap 2)TreeMap 3)LinkedHashMap");
@@ -27,7 +28,11 @@ public class Main {
             }
             map = factoryMaps.getInstanceMap(selectionMap);
 
-            System.out.println("Ingrese el tipo de hash que desea hacer");
+
+            mapWithStudents = lectorArchivo.leerArchivo("./estudiantes.json", map);
+            
+
+            System.out.println("Ingrese el tipo de hash que desea hacer: 1)Organica 2)MD5 3)SHA-1");
             selectionHash = Integer.parseInt(scanner.nextLine());
             if (selectionHash>3|selectionHash<1) {
                 System.out.println("Error");
@@ -37,8 +42,8 @@ public class Main {
     
 
 
-            estudiante = searchStudentbyKey(scanner,hashMethod,map);
-
+            estudiante = searchStudentbyKey(scanner,hashMethod,mapWithStudents);
+            System.out.println(estudiante);
     
         }
 
@@ -47,22 +52,21 @@ public class Main {
     }
 
 
-    public static Estudiante searchStudentbyKey(Scanner scanner, IHash hashMethod, AbstractMap<IHash,Estudiante> map){
+    public static Estudiante searchStudentbyKey(Scanner scanner, IHash hashMethod, AbstractMap<String,Estudiante> map){
         String nameStudent;
         
         System.out.println("Ingrese el nombre del estudiante a buscar:");
-        nameStudent = scanner.nextLine();
-        Estudiante searchStudent = map.find(nameStudent);
+        nameStudent = scanner.nextLine();  
+        
+        String hashName = hashMethod.generateHash(nameStudent);
+        
+        
+        Estudiante searchStudent = map.get(hashName);
         if (searchStudent != null) {
-            System.out.println("Estudiante encontrado: " + searchStudent);
+            return searchStudent;
         } else {
-            System.out.println("El estudiante no existe.");
+            return null;
         }
-
-
-
-
-        return null;
     }
 
 }
