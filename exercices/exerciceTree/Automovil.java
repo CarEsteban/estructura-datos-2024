@@ -2,17 +2,17 @@ package exerciceTree;
 
 public class Automovil {
     // Atributos de la clase
-    private String marca;
     private int modelo; // Ahora modelo es de tipo int
     private double precio;
-    private String linea;
+    private String linea, placa ,marca;
     
     // Constructor con todos los atributos
-    public Automovil(String marca, int modelo, double precio, String linea) {
+    public Automovil(String marca, int modelo, double precio, String linea, String placa) {
         this.marca = marca;
-        this.modelo = modelo; // Guardar el modelo como un valor int
+        this.modelo = modelo;
         this.precio = precio;
         this.linea = linea;
+        this.placa = placa; // Guardar la placa
     }
     
     // Métodos getters y setters
@@ -46,6 +46,14 @@ public class Automovil {
 
     public void setLinea(String linea) {
         this.linea = linea;
+    }
+    
+    public String getPlaca() {
+        return placa;
+    }
+    
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 
     // Método para mostrar la información del Automovil
