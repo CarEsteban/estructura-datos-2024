@@ -29,9 +29,6 @@ public class Main {
             map = factoryMaps.getInstanceMap(selectionMap);
 
 
-            mapWithStudents = lectorArchivo.leerArchivo("./estudiantes.json", map);
-            
-
             System.out.println("Ingrese el tipo de hash que desea hacer: 1)Organica 2)MD5 3)SHA-1");
             selectionHash = Integer.parseInt(scanner.nextLine());
             if (selectionHash>3|selectionHash<1) {
@@ -41,6 +38,9 @@ public class Main {
             hashMethod = factoryHash.getInstanceHash(selectionHash);
     
 
+
+            mapWithStudents = lectorArchivo.leerArchivo("./estudiantes.json", map,hashMethod);
+            
 
             estudiante = searchStudentbyKey(scanner,hashMethod,mapWithStudents);
             System.out.println(estudiante);
