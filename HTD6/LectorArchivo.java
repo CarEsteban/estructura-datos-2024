@@ -15,7 +15,7 @@ public class LectorArchivo {
         this.factoryMaps = factoryMaps;
     }
 
-    public void leerArchivo(String filePath, AbstractMap<String, Estudiante> estudiantesMap) {
+    public AbstractMap<String, Estudiante> leerArchivo(String filePath, AbstractMap<String, Estudiante> estudiantesMap) {
         JSONParser parser = new JSONParser();
 
         try (FileReader reader = new FileReader(filePath)) {
@@ -28,7 +28,8 @@ public class LectorArchivo {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        
+
+        return estudiantesMap;
     }
 
     private void parseEstudianteObject(JSONObject estudiante, AbstractMap<String, Estudiante> estudiantesMap) {
