@@ -1,5 +1,3 @@
-package HTD6;
-
 public class HashMD5 implements IHash{
 
     @Override

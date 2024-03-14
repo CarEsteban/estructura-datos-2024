@@ -1,5 +1,3 @@
-package HTD6;
-
 public class HashOrganica implements IHash{
 
     @Override
