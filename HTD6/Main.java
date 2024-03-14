@@ -36,6 +36,9 @@ public class Main {
             hashMethod = factoryHash.getInstanceHash(selectionHash);
     
 
+
+            estudiante = searchStudentbyKey(scanner,hashMethod,map);
+
     
         }
 
@@ -44,5 +47,22 @@ public class Main {
     }
 
 
+    public static Estudiante searchStudentbyKey(Scanner scanner, IHash hashMethod, AbstractMap<IHash,Estudiante> map){
+        String nameStudent;
+        
+        System.out.println("Ingrese el nombre del estudiante a buscar:");
+        nameStudent = scanner.nextLine();
+        Estudiante searchStudent = map.find(nameStudent);
+        if (searchStudent != null) {
+            System.out.println("Estudiante encontrado: " + searchStudent);
+        } else {
+            System.out.println("El estudiante no existe.");
+        }
+
+
+
+
+        return null;
+    }
 
 }
