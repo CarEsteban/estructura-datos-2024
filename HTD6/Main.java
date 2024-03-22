@@ -99,7 +99,7 @@ public class Main {
             }
         }
 
-        return mapByNationality;
+        return mapByNationality; //Retorna un mapa con los estudiantes que unicamente el usuario ingreso, agrupados en su nacionalidad.
     }
 
 }
