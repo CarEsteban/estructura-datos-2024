@@ -69,4 +69,11 @@ public class Main {
         }
     }
 
+    public static AbstractMap<String, Estudiante> saveByNationality(AbstractMap<String, Estudiante> map){
+        
+        // Por ahora retornará null
+        
+        return null;
+    }
+
 }
