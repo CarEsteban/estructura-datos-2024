@@ -51,15 +51,19 @@ public class Main {
             System.out.println(estudiante);
 
 
-            studentNames.add(estudiante.getName());
-            System.out.println(saveByNationality(mapWithStudents, studentNames));
+            //Unicamente faltaria mandar a llamar e imprimir el metodo saveByNationality
         }
 
         
 
     }
-
-
+    /**
+     * Metodo que recibe un scanner, un metodo de hash y un mapa y devuelve un estudiante buscado por su llave
+     * @param scanner
+     * @param hashMethod
+     * @param map
+     * @return
+     */
     public static Estudiante searchStudentbyKey(Scanner scanner, IHash hashMethod, AbstractMap<String,Estudiante> map){
         String nameStudent;
         
@@ -76,7 +80,12 @@ public class Main {
             return null;
         }
     }
-
+    /**
+     * Metodo que recibe un mapa y una lista de nombres de estudiantes y devuelve un mapa con los estudiantes agrupados por nacionalidad
+     * @param map
+     * @param studentNames
+     * @return
+     */
     public static AbstractMap<String, List<Estudiante>> saveByNationality(AbstractMap<String, Estudiante> map, List<String> studentNames){
         AbstractMap<String, List<Estudiante>> mapByNationality = new HashMap<>();
 
@@ -85,7 +94,6 @@ public class Main {
                 Estudiante estudiante = entry.getValue();
                 if (estudiante.getName().equals(name)) {
                     mapByNationality.computeIfAbsent(estudiante.getCountry(), k -> new ArrayList<>()).add(estudiante);
-                    // Suponiendo que cada nombre es único, podemos parar el loop después de encontrar el estudiante
                     break;
                 }
             }
