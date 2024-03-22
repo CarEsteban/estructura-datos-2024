@@ -6,11 +6,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
-    
-    
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<String> studentNames = new ArrayList<>();
 
         // Factories
         FactoryMaps<String, Estudiante> factoryMaps = new FactoryMaps<>();
@@ -67,14 +64,12 @@ public class Main {
             }
         }
     }
-
-    
     /**
      * Metodo que recibe un scanner, un metodo de hash y un mapa y devuelve un estudiante buscado por su llave
      * @param scanner
      * @param hashMethod
      * @param map
-     * @return
+     * @return searchStudent
      */
     public static Estudiante searchStudentbyKey(Scanner scanner, IHash hashMethod, AbstractMap<String,Estudiante> map){
         String nameStudent;
@@ -92,47 +87,40 @@ public class Main {
             return null;
         }
     }
-    /**
-     * Metodo que recibe un scanner, un metodo de hash y un mapa y devuelve un estudiante buscado por su llave
+    /***
+     * Metodo que recibe un scanner y un mapa y busca estudiantes por nacionalidad
      * @param scanner
-     * @param hashMethod
      * @param map
-     * @return
      */
     public static void searchStudentbyNati(Scanner scanner, AbstractMap<String, Estudiante> map) {
         System.out.println("Ingrese la nacionalidad de los estudiantes a buscar:");
         String nationality = scanner.nextLine();
         List<String> studentNames = new ArrayList<>();
     
-        // Buscar todos los estudiantes que coincidan con la nacionalidad ingresada y agregar sus nombres a la lista
         for (Map.Entry<String, Estudiante> entry : map.entrySet()) {
             Estudiante estudiante = entry.getValue();
             if (estudiante.getCountry().equalsIgnoreCase(nationality)) {
                 studentNames.add(estudiante.getName());
             }
         }
-    
-        // Si no se encontraron estudiantes con esa nacionalidad, informar al usuario y retornar
+
         if (studentNames.isEmpty()) {
             System.out.println("No se encontraron estudiantes de la nacionalidad " + nationality);
             return;
         }
     
-        // Utilizar el método saveByNationality para agrupar los estudiantes encontrados por nacionalidad
         AbstractMap<String, List<Estudiante>> studentsByNationality = saveByNationality(map, studentNames);
     
-        // Mostrar los estudiantes agrupados por nacionalidad
         studentsByNationality.forEach((key, value) -> {
             System.out.println("Nacionalidad: " + key);
             value.forEach(student -> System.out.println("- " + student.getName()));
         });
     }
-    
     /**
      * Metodo que recibe un mapa y una lista de nombres de estudiantes y devuelve un mapa con los estudiantes agrupados por nacionalidad
      * @param map
      * @param studentNames
-     * @return
+     * @return mapByNationality
      */
     public static AbstractMap<String, List<Estudiante>> saveByNationality(AbstractMap<String, Estudiante> map, List<String> studentNames){
         AbstractMap<String, List<Estudiante>> mapByNationality = new HashMap<>();

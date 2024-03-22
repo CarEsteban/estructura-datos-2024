@@ -2,6 +2,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashSHA_1 implements IHash {
+    /**
+     * Método que genera un hash SHA-1 de un valor
+     * @param value
+     * @return hash
+     */
     @Override
     public String generateHash(String value) {
         try {

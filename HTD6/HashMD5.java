@@ -2,7 +2,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashMD5 implements IHash{
-
+    /**
+     * Método que genera un hash MD5 de un valor
+     * @param value
+     * @return hash
+     */
     @Override
     public String generateHash(String value) {
         try {

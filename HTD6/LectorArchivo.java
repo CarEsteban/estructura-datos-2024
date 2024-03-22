@@ -9,11 +9,20 @@ import java.util.AbstractMap;
 
 public class LectorArchivo {
     private FactoryMaps<String, Estudiante> factoryMaps;
-
+    /**
+     * Constructor de la clase LectorArchivo
+     * @param factoryMaps
+     */
     public LectorArchivo(FactoryMaps<String, Estudiante> factoryMaps) {
         this.factoryMaps = factoryMaps;
     }
-
+    /**
+     * Método que lee un archivo JSON y retorna un mapa con los estudiantes
+     * @param filePath
+     * @param estudiantesMap
+     * @param hashMethod
+     * @return estudiantesMap
+     */
     @SuppressWarnings("unchecked")
     public AbstractMap<String, Estudiante> leerArchivo(String filePath, AbstractMap<String, Estudiante> estudiantesMap, IHash hashMethod) {
         JSONParser parser = new JSONParser();
@@ -31,7 +40,12 @@ public class LectorArchivo {
 
         return estudiantesMap;
     }
-
+    /**
+     * Método que parsea un objeto JSON de estudiante y lo agrega al mapa de estudiantes
+     * @param estudiante
+     * @param estudiantesMap
+     * @param hashMethod
+     */
     private void parseEstudianteObject(JSONObject estudiante, AbstractMap<String, Estudiante> estudiantesMap, IHash hashMethod) {
         String name = (String) estudiante.get("name");
         String hashName = hashMethod.generateHash(name);
