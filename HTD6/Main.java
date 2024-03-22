@@ -1,10 +1,15 @@
 import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Estudiante estudiante ;
+        List<String> studentNames = new ArrayList<>();
 
         //factories
         FactoryMaps<String,Estudiante> factoryMaps = new FactoryMaps<>();
@@ -44,7 +49,10 @@ public class Main {
 
             estudiante = searchStudentbyKey(scanner,hashMethod,mapWithStudents);
             System.out.println(estudiante);
-    
+
+
+            studentNames.add(estudiante.getName());
+            System.out.println(saveByNationality(mapWithStudents, studentNames));
         }
 
         
@@ -69,11 +77,21 @@ public class Main {
         }
     }
 
-    public static AbstractMap<String, Estudiante> saveByNationality(AbstractMap<String, Estudiante> map){
-        
-        // Por ahora retornará null
-        
-        return null;
+    public static AbstractMap<String, List<Estudiante>> saveByNationality(AbstractMap<String, Estudiante> map, List<String> studentNames){
+        AbstractMap<String, List<Estudiante>> mapByNationality = new HashMap<>();
+
+        for (String name : studentNames) {
+            for (Map.Entry<String, Estudiante> entry : map.entrySet()) {
+                Estudiante estudiante = entry.getValue();
+                if (estudiante.getName().equals(name)) {
+                    mapByNationality.computeIfAbsent(estudiante.getCountry(), k -> new ArrayList<>()).add(estudiante);
+                    // Suponiendo que cada nombre es único, podemos parar el loop después de encontrar el estudiante
+                    break;
+                }
+            }
+        }
+
+        return mapByNationality;
     }
 
 }
