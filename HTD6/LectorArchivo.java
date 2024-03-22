@@ -15,7 +15,7 @@ public class LectorArchivo {
         this.factoryMaps = factoryMaps;
     }
 
-    public AbstractMap<String, Estudiante> leerArchivo(String filePath, AbstractMap<String, Estudiante> estudiantesMap) {
+    public AbstractMap<String, Estudiante> leerArchivo(String filePath, AbstractMap<String, Estudiante> estudiantesMap, IHash hashMethod) {
         JSONParser parser = new JSONParser();
 
         try (FileReader reader = new FileReader(filePath)) {
@@ -23,7 +23,7 @@ public class LectorArchivo {
 
             JSONArray estudiantes = (JSONArray) obj;
 
-            estudiantes.forEach(estudiante -> parseEstudianteObject((JSONObject) estudiante, estudiantesMap));
+            estudiantes.forEach(estudiante -> parseEstudianteObject((JSONObject) estudiante, estudiantesMap, hashMethod));
 
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -32,14 +32,14 @@ public class LectorArchivo {
         return estudiantesMap;
     }
 
-    private void parseEstudianteObject(JSONObject estudiante, AbstractMap<String, Estudiante> estudiantesMap) {
+    private void parseEstudianteObject(JSONObject estudiante, AbstractMap<String, Estudiante> estudiantesMap, IHash hashMethod) {
         String name = (String) estudiante.get("name");
+        String hashName = hashMethod.generateHash(name);
         String phone = (String) estudiante.get("phone");
         String email = (String) estudiante.get("email");
         String postalZip = (String) estudiante.get("postalZip");
         String country = (String) estudiante.get("country");
-
-        Estudiante newEstudiante = new Estudiante(name, phone, email, postalZip, country);
-        estudiantesMap.put(name, newEstudiante);
+    
+        estudiantesMap.put(hashName, new Estudiante(name, phone, email, postalZip, country));
     }
 }
