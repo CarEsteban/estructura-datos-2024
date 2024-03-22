@@ -26,7 +26,7 @@ public class Main {
         int selectionMap = Integer.parseInt(scanner.nextLine());
         if (selectionMap > 3 || selectionMap < 1) {
             System.out.println("Error en la selección del tipo de mapa.");
-            return;
+        
         }
         map = factoryMaps.getInstanceMap(selectionMap);
 
@@ -34,7 +34,7 @@ public class Main {
         int selectionHash = Integer.parseInt(scanner.nextLine());
         if (selectionHash > 3 || selectionHash < 1) {
             System.out.println("Error en la selección del tipo de hash.");
-            return;
+        
         }
         hashMethod = factoryHash.getInstanceHash(selectionHash);
 

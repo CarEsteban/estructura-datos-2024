@@ -6,7 +6,6 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.AbstractMap;
-import java.util.Map;
 
 public class LectorArchivo {
     private FactoryMaps<String, Estudiante> factoryMaps;
@@ -15,6 +14,7 @@ public class LectorArchivo {
         this.factoryMaps = factoryMaps;
     }
 
+    @SuppressWarnings("unchecked")
     public AbstractMap<String, Estudiante> leerArchivo(String filePath, AbstractMap<String, Estudiante> estudiantesMap, IHash hashMethod) {
         JSONParser parser = new JSONParser();
 
