@@ -11,10 +11,12 @@ public class Driver {
     public static void main(String[] args) throws IOException {
 
         //Declaración de variables
-        String fileName = "./src/diccionario.txt", idiomaEntrada, idiomaSalida;
+        String fileName = "./src/diccionario.txt", oracionOriginal, oracionTraducida,palabraNueva,idiomaEntrada, idiomaSalida, fileNameTexto = "./src/texto.txt";
         ArrayList<ArrayList<String>> dictionary;
         Scanner scanner = new Scanner(System.in);
-        ArrayList<String> textoEntrada;
+        ArrayList<String> textoEntrada,textoTraducido=new ArrayList<>();
+        int opc;
+        boolean continuar=true;
 
         IWalk<ArrayList<String>> printWalk = new PrintWalk();
 
@@ -26,7 +28,8 @@ public class Driver {
         ITree<String, ArrayList<String>> englishTree = new BinarySearchTree<>(Comparator.comparing(String::toString));
         ITree<String, ArrayList<String>> spanishTree = new BinarySearchTree<>(Comparator.comparing(String::toString));
         ITree<String, ArrayList<String>> frenchTree = new BinarySearchTree<>(Comparator.comparing(String::toString));
-        
+        ITree<String, ArrayList<String>> arbolUsar = null;
+
         //cargar el archivo a un diccionario
         dictionary = loadDictionary(fileName);
         
@@ -42,6 +45,7 @@ public class Driver {
 
         //leer el archivo del texto
         textoEntrada = loadTexto(fileNameTexto);
+        
         
         
         //identificar el idioma (por ahora, el usuario lo coloca)
