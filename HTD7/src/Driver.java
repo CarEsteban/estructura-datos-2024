@@ -1,3 +1,8 @@
+/**
+    Esta clase representa un programa controlador para una aplicación de traducción. Carga un diccionario de traducciones de palabras,
+    permite a los usuarios elegir opciones como mostrar diccionarios ordenados o traducir texto, y proporciona funcionalidades
+    para cargar diccionarios y archivos de texto.
+ */
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -5,12 +10,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 
-
 public class Driver {
 
+    /**
+     * El metodo main del Driver
+     *
+     * @param args Argumentos de línea de comandos (no utilizados en este programa).
+     * @throws IOException Si ocurre un error de E/S mientras se leen los archivos.
+     */
     public static void main(String[] args) throws IOException {
 
-        //Declaración de variables
+        // Declaración de variables
         String fileName = "./src/diccionario.txt", oracionOriginal, oracionTraducida,palabraNueva,idiomaEntrada, idiomaSalida, fileNameTexto = "./src/texto.txt";
         ArrayList<ArrayList<String>> dictionary;
         Scanner scanner = new Scanner(System.in);
@@ -20,40 +30,32 @@ public class Driver {
 
         IWalk<ArrayList<String>> printWalk = new PrintWalk();
 
-        //Comprobar la ruta del directorio 
-        //String fileName = "C:\\Users\\esteb\\OneDrive\\Documentos\\UNIVERSIDAD\\DATOS\\estructura-datos-2024\\HTD7\\src\\diccionario.txt";
-        //String directorioActual = System.getProperty("user.dir");
-
-        //Creación de los arboles
+        // Cración de los arboles
         ITree<String, ArrayList<String>> englishTree = new BinarySearchTree<>(Comparator.comparing(String::toString));
         ITree<String, ArrayList<String>> spanishTree = new BinarySearchTree<>(Comparator.comparing(String::toString));
         ITree<String, ArrayList<String>> frenchTree = new BinarySearchTree<>(Comparator.comparing(String::toString));
         ITree<String, ArrayList<String>> arbolUsar = null;
 
-        //cargar el archivo a un diccionario
+        // Carga el archivo diccionario
         dictionary = loadDictionary(fileName);
-        
-        //insertar los archivos a los árboles
+
+        // Inserta la información a los arboles
         for (int i = 0; i < dictionary.size(); i++) {
             englishTree.insert(dictionary.get(i).get(0), dictionary.get(i));
             spanishTree.insert(dictionary.get(i).get(1), dictionary.get(i));
             frenchTree.insert(dictionary.get(i).get(2), dictionary.get(i));
         }
 
-        //Comprobar si los elemenos se ordenan respecto al idioma
-        //frenchTree.InOrderWalk(printWalk);
-
-        //leer el archivo del texto
+        // Lee el archivo de entrada
         textoEntrada = loadTexto(fileNameTexto);
-        
-        //identificar el idioma (automaticamente)
-        // Contadores para cada idioma
+
+        // Identifica el lenguaje automáticamente
         int contadorIngles = 0;
         int contadorEspanol = 0;
         int contadorFrances = 0;
 
-        for (String palabraTexto : textoEntrada) { // Iterar sobre cada palabra del texto
-            for (ArrayList<String> entradaDiccionario : dictionary) { // Iterar sobre cada entrada del diccionario
+        for (String palabraTexto : textoEntrada) {
+            for (ArrayList<String> entradaDiccionario : dictionary) {
                 if (palabraTexto.equalsIgnoreCase(entradaDiccionario.get(0))) {
                     contadorIngles++;
                 }
@@ -66,7 +68,6 @@ public class Driver {
             }
         }
 
-        // Decidir el idioma basado en el contador más alto
         if (contadorIngles > contadorEspanol + contadorFrances) {
             idiomaEntrada="Inglés";
         } else if (contadorEspanol > contadorIngles + contadorFrances) {
@@ -77,16 +78,14 @@ public class Driver {
             idiomaEntrada="Undefined";
         }
 
-        
-
         while (continuar) {
-            
+
             System.out.println("Elija una opción:\n1)Mostrar ordenados los diccionarios\n2)Traducir texto");
             opc=scanner.nextInt();scanner.nextLine();
 
             switch (opc) {
                 case 1:
-                //el orden del array no cambia, fijarse literalmente en la columna del idioma que ahi lo ordena
+                    // Display sorted dictionaries
                     System.out.println("------------------------------------------------");
                     System.out.println("Orden en inglés");
                     englishTree.InOrderWalk(printWalk);
@@ -98,15 +97,13 @@ public class Driver {
                     frenchTree.InOrderWalk(printWalk);
                     System.out.println("------------------------------------------------");
 
-
-
                     continuar=verMenu(scanner);
 
                     break;
-            
+
                 case 2:
                     textoTraducido.clear();
-                            
+
                     if (idiomaEntrada.equals("Undefined")) {
                         System.out.println("No se reconoce el idioma de entrada");
                     }
@@ -117,7 +114,7 @@ public class Driver {
                     idiomaSalida = scanner.nextLine();
 
 
-                    int idiomaIndex = -1; // Este índice debe ser ajustado según el idioma de salida: 0 para inglés, 1 para español, 2 para francés, etc.
+                    int idiomaIndex = -1;
                     switch(idiomaEntrada){
                         case "Inglés":
                             arbolUsar = englishTree;
@@ -129,7 +126,7 @@ public class Driver {
                             arbolUsar = frenchTree;
                             break;
                     }
-                    // Ajustar idiomaIndex según el idioma de salida elegido
+
                     switch (idiomaSalida) {
                         case "Ingles":
                             idiomaIndex = 0;
@@ -144,24 +141,20 @@ public class Driver {
                             System.out.println("Idioma de salida no reconocido.");
                             break;
                     }
-                    // Ahora buscamos cada palabra en el árbol seleccionado y mostramos su traducción si existe
+
                     for (String palabra : textoEntrada) {
                         ArrayList<String> traduccion = null;
                         traduccion = arbolUsar.find(palabra);
                         if (traduccion != null && idiomaIndex != -1) {
                             palabraNueva = traduccion.get(idiomaIndex);
                             textoTraducido.add(palabraNueva);
-                            //System.out.println(palabra + " -> " + traduccion.get(idiomaIndex));
                         } else {
                             textoTraducido.add("'"+palabra+"'");
-                            //System.out.println(palabra + " -> No se encontró traducción");
                         }
                     }
 
                     oracionOriginal = String.join(" ", textoEntrada);
                     oracionTraducida = String.join(" ", textoTraducido);
-
-
 
                     System.out.println( oracionOriginal);
                     System.out.println( oracionTraducida);
@@ -169,7 +162,7 @@ public class Driver {
                     continuar=verMenu(scanner);
 
                     break;
-            
+
                 default:
                     System.out.println("Opción no existente");
                     continuar=false;
@@ -177,9 +170,14 @@ public class Driver {
             }
         }
         scanner.close();
-
     }
 
+    /**
+     * Muestra un mensaje al usuario preguntando si desea volver al menú principal o no.
+     *
+     * @param scanner El objeto Scanner utilizado para la entrada del usuario.
+     * @return Verdadero si el usuario desea volver al menú principal, falso en caso contrario.
+     */
     public static boolean verMenu(Scanner scanner){
         int opc;
         System.out.println("Desea regresar al menú? (1=Si/2=No)");
@@ -194,6 +192,13 @@ public class Driver {
         }
     }
 
+    /**
+     * Carga texto desde un archivo especificado.
+     *
+     * @param fileName El nombre del archivo que contiene el texto
+     * @return Un ArrayList de cadenas que representan el texto
+     * @throws IOException Si ocurre un error de E/S mientras se lee el archivo.
+     */
     public static ArrayList<ArrayList<String>> loadDictionary(String fileName) throws IOException {
         ArrayList<ArrayList<String>> dictionary = new ArrayList<>();
         BufferedReader reader = null;
@@ -201,12 +206,10 @@ public class Driver {
             reader = new BufferedReader(new FileReader(fileName));
             String linea = reader.readLine();
             while (linea != null) {
-                // Divide la línea usando coma como delimitador
                 String[] palabras = linea.split(",");
                 ArrayList<String> lineArray = new ArrayList<>();
-                // Convierte cada palabra a minúsculas antes de añadirla a lineArray
                 for (String palabra : palabras) {
-                    lineArray.add(palabra.toLowerCase().trim()); // También aplicamos trim() para eliminar espacios adicionales
+                    lineArray.add(palabra.toLowerCase().trim());
                 }
                 dictionary.add(lineArray);
                 linea = reader.readLine();
@@ -221,7 +224,13 @@ public class Driver {
         return dictionary;
     }
 
-
+    /**
+     * Carga texto desde un archivo especificado.
+     *
+     * @param fileName El nombre del archivo que contiene el texto
+     * @return Un ArrayList de cadenas que representan el texto
+     * @throws IOException Si ocurre un error de E/S mientras se lee el archivo.
+     */
     public static ArrayList<String> loadTexto(String fileName) throws IOException {
         ArrayList<String> palabras = new ArrayList<>();
         BufferedReader reader = null;
@@ -229,12 +238,10 @@ public class Driver {
             reader = new BufferedReader(new FileReader(fileName));
             String linea = reader.readLine();
             while (linea != null) {
-                // Divide cada línea en palabras usando el espacio como delimitador
                 String[] palabrasDeLaLinea = linea.split("\\s+");
-                // Agrega todas las palabras de la línea al ArrayList, eliminando espacios al principio y convirtiendo a minúsculas
                 for (String palabra : palabrasDeLaLinea) {
-                    String palabraLimpia = palabra.trim().toLowerCase(); // Elimina espacios y convierte a minúsculas
-                    if (!palabraLimpia.isEmpty()) { // Evita agregar cadenas vacías
+                    String palabraLimpia = palabra.trim().toLowerCase();
+                    if (!palabraLimpia.isEmpty()) {
                         palabras.add(palabraLimpia);
                     }
                 }
@@ -249,6 +256,4 @@ public class Driver {
         }
         return palabras;
     }
-
-
 }
