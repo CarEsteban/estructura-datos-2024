@@ -79,9 +79,37 @@ public class Driver {
         }
 
         
+        while (continuar) {
+            
+            System.out.println("Elija una opción:\n1)Mostrar ordenados los diccionarios\n2)Traducir texto");
+            opc=scanner.nextInt();scanner.nextLine();
+
+            switch (opc) {
+                case 1:
+                //el orden del array no cambia, fijarse literalmente en la columna del idioma que ahi lo ordena
+                    System.out.println("------------------------------------------------");
+                    System.out.println("Orden en inglés");
+                    englishTree.InOrderWalk(printWalk);
+                    System.out.println("------------------------------------------------");
+                    System.out.println("Orden en español");
+                    spanishTree.InOrderWalk(printWalk);
+                    System.out.println("------------------------------------------------");
+                    System.out.println("Orden en francés");
+                    frenchTree.InOrderWalk(printWalk);
+                    System.out.println("------------------------------------------------");
 
 
-                    
+
+                    continuar=verMenu(scanner);
+
+                    break;
+            
+                default:
+                    System.out.println("Opción no existente");
+                    continuar=false;
+                    break;
+            }
+        }
 
 
 
