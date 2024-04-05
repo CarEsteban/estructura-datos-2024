@@ -2,9 +2,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
+
 
 public class Driver {
 
@@ -46,7 +46,6 @@ public class Driver {
         //leer el archivo del texto
         textoEntrada = loadTexto(fileNameTexto);
         
-        
         //identificar el idioma (automaticamente)
         // Contadores para cada idioma
         int contadorIngles = 0;
@@ -79,6 +78,7 @@ public class Driver {
         }
 
         
+
         while (continuar) {
             
             System.out.println("Elija una opción:\n1)Mostrar ordenados los diccionarios\n2)Traducir texto");
@@ -104,19 +104,81 @@ public class Driver {
 
                     break;
             
+                case 2:
+                    textoTraducido.clear();
+                            
+                    if (idiomaEntrada.equals("Undefined")) {
+                        System.out.println("No se reconoce el idioma de entrada");
+                    }
+
+                    System.out.println("Idioma de entrada: " + idiomaEntrada);
+
+                    System.out.println("Ingrese el idioma de salida");
+                    idiomaSalida = scanner.nextLine();
+
+
+                    int idiomaIndex = -1; // Este índice debe ser ajustado según el idioma de salida: 0 para inglés, 1 para español, 2 para francés, etc.
+                    switch(idiomaEntrada){
+                        case "Inglés":
+                            arbolUsar = englishTree;
+                            break;
+                        case "Español":
+                            arbolUsar = spanishTree;
+                            break;
+                        case "Francés":
+                            arbolUsar = frenchTree;
+                            break;
+                    }
+                    // Ajustar idiomaIndex según el idioma de salida elegido
+                    switch (idiomaSalida) {
+                        case "Ingles":
+                            idiomaIndex = 0;
+                            break;
+                        case "Espanol":
+                            idiomaIndex = 1;
+                            break;
+                        case "Frances":
+                            idiomaIndex = 2;
+                            break;
+                        default:
+                            System.out.println("Idioma de salida no reconocido.");
+                            break;
+                    }
+                    // Ahora buscamos cada palabra en el árbol seleccionado y mostramos su traducción si existe
+                    for (String palabra : textoEntrada) {
+                        ArrayList<String> traduccion = null;
+                        traduccion = arbolUsar.find(palabra);
+                        if (traduccion != null && idiomaIndex != -1) {
+                            palabraNueva = traduccion.get(idiomaIndex);
+                            textoTraducido.add(palabraNueva);
+                            //System.out.println(palabra + " -> " + traduccion.get(idiomaIndex));
+                        } else {
+                            textoTraducido.add("'"+palabra+"'");
+                            //System.out.println(palabra + " -> No se encontró traducción");
+                        }
+                    }
+
+                    oracionOriginal = String.join(" ", textoEntrada);
+                    oracionTraducida = String.join(" ", textoTraducido);
+
+
+
+                    System.out.println( oracionOriginal);
+                    System.out.println( oracionTraducida);
+
+                    continuar=verMenu(scanner);
+
+                    break;
+            
                 default:
                     System.out.println("Opción no existente");
                     continuar=false;
                     break;
             }
         }
-
-
-
         scanner.close();
 
     }
-
 
     public static boolean verMenu(Scanner scanner){
         int opc;
@@ -159,7 +221,7 @@ public class Driver {
         return dictionary;
     }
 
-    
+
     public static ArrayList<String> loadTexto(String fileName) throws IOException {
         ArrayList<String> palabras = new ArrayList<>();
         BufferedReader reader = null;
@@ -187,7 +249,6 @@ public class Driver {
         }
         return palabras;
     }
-
 
 
 }
