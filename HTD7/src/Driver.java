@@ -62,6 +62,21 @@ public class Driver {
 
     }
 
+
+    public static boolean verMenu(Scanner scanner){
+        int opc;
+        System.out.println("Desea regresar al menú? (1=Si/2=No)");
+        opc = scanner.nextInt();scanner.nextLine();
+        switch (opc) {
+            case 1:
+                return true;
+            case 2:
+                return false;
+            default:
+                return false;
+        }
+    }
+
     public static ArrayList<ArrayList<String>> loadDictionary(String fileName) throws IOException {
         ArrayList<ArrayList<String>> dictionary = new ArrayList<>();
         BufferedReader reader = null;
