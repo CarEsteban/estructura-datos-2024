@@ -47,15 +47,38 @@ public class Driver {
         textoEntrada = loadTexto(fileNameTexto);
         
         
+        //identificar el idioma (automaticamente)
+        // Contadores para cada idioma
+        int contadorIngles = 0;
+        int contadorEspanol = 0;
+        int contadorFrances = 0;
+
+        for (String palabraTexto : textoEntrada) { // Iterar sobre cada palabra del texto
+            for (ArrayList<String> entradaDiccionario : dictionary) { // Iterar sobre cada entrada del diccionario
+                if (palabraTexto.equalsIgnoreCase(entradaDiccionario.get(0))) {
+                    contadorIngles++;
+                }
+                if (palabraTexto.equalsIgnoreCase(entradaDiccionario.get(1))) {
+                    contadorEspanol++;
+                }
+                if (palabraTexto.equalsIgnoreCase(entradaDiccionario.get(2))) {
+                    contadorFrances++;
+                }
+            }
+        }
+
+        // Decidir el idioma basado en el contador más alto
+        if (contadorIngles > contadorEspanol + contadorFrances) {
+            idiomaEntrada="Inglés";
+        } else if (contadorEspanol > contadorIngles + contadorFrances) {
+            idiomaEntrada="Español";
+        } else if (contadorFrances > contadorIngles + contadorEspanol) {
+            idiomaEntrada="Francés";
+        } else {
+            idiomaEntrada="Undefined";
+        }
+
         
-        //identificar el idioma (por ahora, el usuario lo coloca)
-
-
-
-        System.out.println("Ingrese el idioma del texto");
-        idiomaEntrada = scanner.nextLine();
-                    System.out.println("Ingrese el idioma de salida");
-                    idiomaSalida = scanner.nextLine();
 
 
                     
