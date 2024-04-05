@@ -89,6 +89,35 @@ public class Driver {
         return dictionary;
     }
 
+    
+    public static ArrayList<String> loadTexto(String fileName) throws IOException {
+        ArrayList<String> palabras = new ArrayList<>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(fileName));
+            String linea = reader.readLine();
+            while (linea != null) {
+                // Divide cada línea en palabras usando el espacio como delimitador
+                String[] palabrasDeLaLinea = linea.split("\\s+");
+                // Agrega todas las palabras de la línea al ArrayList, eliminando espacios al principio y convirtiendo a minúsculas
+                for (String palabra : palabrasDeLaLinea) {
+                    String palabraLimpia = palabra.trim().toLowerCase(); // Elimina espacios y convierte a minúsculas
+                    if (!palabraLimpia.isEmpty()) { // Evita agregar cadenas vacías
+                        palabras.add(palabraLimpia);
+                    }
+                }
+                linea = reader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
+        }
+        return palabras;
+    }
+
 
 
 }
