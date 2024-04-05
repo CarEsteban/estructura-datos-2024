@@ -26,7 +26,7 @@ public class Driver {
         ITree<String, ArrayList<String>> englishTree = new BinarySearchTree<>(Comparator.comparing(String::toString));
         ITree<String, ArrayList<String>> spanishTree = new BinarySearchTree<>(Comparator.comparing(String::toString));
         ITree<String, ArrayList<String>> frenchTree = new BinarySearchTree<>(Comparator.comparing(String::toString));
-
+        
         //cargar el archivo a un diccionario
         dictionary = loadDictionary(fileName);
         
@@ -42,19 +42,19 @@ public class Driver {
 
         //leer el archivo del texto
         textoEntrada = loadTexto(fileNameTexto);
-
-
+        
+        
         //identificar el idioma (por ahora, el usuario lo coloca)
 
 
 
         System.out.println("Ingrese el idioma del texto");
         idiomaEntrada = scanner.nextLine();
-        System.out.println("Ingrese el idioma de salida");
-        idiomaSalida = scanner.nextLine();
+                    System.out.println("Ingrese el idioma de salida");
+                    idiomaSalida = scanner.nextLine();
 
 
-
+                    
 
 
 
@@ -69,7 +69,13 @@ public class Driver {
             reader = new BufferedReader(new FileReader(fileName));
             String linea = reader.readLine();
             while (linea != null) {
-                ArrayList<String> lineArray = new ArrayList<>(Arrays.asList(linea.split(","))); // Asumiendo coma como delimitador
+                // Divide la línea usando coma como delimitador
+                String[] palabras = linea.split(",");
+                ArrayList<String> lineArray = new ArrayList<>();
+                // Convierte cada palabra a minúsculas antes de añadirla a lineArray
+                for (String palabra : palabras) {
+                    lineArray.add(palabra.toLowerCase().trim()); // También aplicamos trim() para eliminar espacios adicionales
+                }
                 dictionary.add(lineArray);
                 linea = reader.readLine();
             }
@@ -82,4 +88,7 @@ public class Driver {
         }
         return dictionary;
     }
+
+
+
 }
