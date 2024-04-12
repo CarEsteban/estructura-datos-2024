@@ -20,7 +20,13 @@ public class Driver{
 
 
     }
-    
+
+    /**
+     * Metodo que lee un archivo y lo ingresa a un HeapUsingIterativeBinaryTree
+     * @param fileName
+     * @param tipoDeArbol
+     * @return HeapUsingIterativeBinaryTree<Integer, Proceso>
+     */
  
     public static HeapUsingIterativeBinaryTree<Integer, Proceso> leerEIngresarArchivo(String fileName, HeapUsingIterativeBinaryTree<Integer, Proceso> tipoDeArbol) {
 
@@ -43,16 +49,21 @@ public class Driver{
         // Devolver el árbol poblado
         return tipoDeArbol;
     }
-
-    
+    /**
+     * Metodo que muestra los procesos en orden usando HeapUsingIterativeBinaryTree
+     * @param tipoArbol
+     */
     public static void mostrarProcesosEnOrden(HeapUsingIterativeBinaryTree<Integer, Proceso> tipoArbol) {
         while (!tipoArbol.isEmpty()) {
             Proceso proceso = tipoArbol.remove(); 
             System.out.println(proceso.toString());
         }
     }
-
-
+    /**
+     * Metodo que lee un archivo y lo ingresa a un PriorityQueue
+     * @param fileName
+     * @param queue
+     */
     public static void leerEIngresarArchivoPriority(String fileName, PriorityQueue<Proceso> queue) {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -70,7 +81,10 @@ public class Driver{
             e.printStackTrace();
         }
     }
-
+    /**
+     * Metodo que muestra los procesos en orden usando PriorityQueue
+     * @param queue
+     */
     public static void mostrarProcesosEnOrdenPriority(PriorityQueue<Proceso> queue) {
         while (!queue.isEmpty()) {
             Proceso proceso = queue.poll(); // Extraer el elemento con mayor prioridad
