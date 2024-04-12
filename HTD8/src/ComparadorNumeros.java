@@ -4,7 +4,7 @@ import java.util.Comparator;
  * @author moises.alonso
  *
  */
-public class ComparadorNumeros implements Comparator<Integer> {
+public class ComparadorNumeros<Integer> implements Comparator<Integer> {
 
 	@Override
 	public int compare(Integer o1, Integer o2) {
