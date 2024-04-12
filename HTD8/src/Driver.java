@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.PriorityQueue;
+import java.util.Scanner;
 
 public class Driver{
     public static void main(String[] args) {
@@ -11,13 +12,29 @@ public class Driver{
         PriorityQueue<Proceso> arbolPriorityQueue = new PriorityQueue<>((p1, p2) -> Integer.compare(p1.getPrioridad(), p2.getPrioridad()));
 
 
-        leerEIngresarArchivo(fileName, tipoArbol);
-        mostrarProcesosEnOrden(tipoArbol);
+        Scanner scanner = new Scanner(System.in);
 
-        leerEIngresarArchivoPriority(fileName, arbolPriorityQueue);
-        mostrarProcesosEnOrdenPriority(arbolPriorityQueue);
+        System.out.println("Seleccione el tipo de árbol que desea usar:");
+        System.out.println("1. Heap");
+        System.out.println("2. Priority Queue");
+
+        int opcion = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea restante
 
 
+        switch (opcion) {
+            case 1:
+                leerEIngresarArchivo(fileName, tipoArbol);
+                mostrarProcesosEnOrden(tipoArbol);
+                break;
+            case 2:
+                leerEIngresarArchivoPriority(fileName, arbolPriorityQueue);
+                mostrarProcesosEnOrdenPriority(arbolPriorityQueue);
+                break;
+            default:
+                System.out.println("Opción no válida.");
+                break;
+        }
 
     }
 
