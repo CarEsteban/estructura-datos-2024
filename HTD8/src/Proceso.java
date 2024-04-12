@@ -27,4 +27,14 @@ public class Proceso  {
     public String getNombreProceso() {
         return nombreProceso;
     }
+
+    @Override
+    public String toString() {
+        return "Proceso{" +
+            "nombreProceso='" + nombreProceso + '\'' +
+            ", usuario='" + usuario + '\'' +
+            ", niceValue=" + niceValue +
+            ", prioridad=" + prioridad +
+            '}';
+    }
 }
