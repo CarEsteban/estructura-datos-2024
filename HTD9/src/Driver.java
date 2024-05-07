@@ -57,9 +57,6 @@ public class Driver {
                             }
                         }
 
-                        // Generar archivo .tree con las frecuencias
-                        generateTreeFile(huffman.getFrequencies(), "./src/output.tree");
-
                         System.out.println("Archivo .huff creado con éxito.");
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -108,9 +105,28 @@ public class Driver {
                     break;
 
                 case 3:
-                    int frecuencias[] = huffman.getFrequencies();
                     // Mostrar tabla de frecuencias
-                    generateTreeFile(frecuencias, "./src/output.tree");
+                    try {
+                        // Convertir el archivo de texto a una cadena
+                        TxtToStringConverter converter = new TxtToStringConverter();
+                        String text = converter.readFileToString("./src/texto_prueba.txt");
+
+                        // Codificar el texto usando Huffman
+                        Huffman huffman = new Huffman(text);
+                        String huffmanCode = huffman.encode();
+                        int frecuencias[] = new int[256];
+                        for (int i = 0; i < huffmanCode.length(); i++) {
+                            frecuencias[huffmanCode.charAt(i)]++;
+                        }
+                        generateTreeFile(frecuencias, "./src/frecuencias.txt");
+                        System.out.println("Archivo de frecuencias creado con éxito.");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                    // Mostrar tabla de frecuencias
+                    
                     
                 
                 case 0:
