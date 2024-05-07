@@ -8,6 +8,7 @@ public class Huffman {
     private final String text;
     private Map<Character, Integer> charFrequencies;
     private final Map<Character, String> huffmanCodes;
+    private Map<Character, Integer> frequencyMap;
 
     public Huffman(String text) {
         this.text = text;
@@ -15,6 +16,23 @@ public class Huffman {
         huffmanCodes = new HashMap<>();
         buildHuffmanTree();
         buildHuffmanCodes(root, "");
+        this.frequencyMap = new HashMap<>();
+        calculateFrequencies();
+    }
+    
+    // Método para calcular las frecuencias de cada carácter en el texto
+    private void calculateFrequencies() {
+        for (char c : text.toCharArray()) {
+            frequencyMap.put(c, frequencyMap.getOrDefault(c, 0) + 1);
+        }
+    }
+
+    // Método para imprimir la tabla de frecuencias
+    public void printFrequencies() {
+        System.out.println("Tabla de frecuencias:");
+        for (Map.Entry<Character, Integer> entry : frequencyMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
 
     // Método para construir el mapa de frecuencias de caracteres
