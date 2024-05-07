@@ -3,6 +3,11 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 // Clase Huffman con todas las funcionalidades necesarias
+/**
+ * The Huffman class represents a Huffman encoding algorithm implementation.
+ * It provides methods to calculate character frequencies, build a Huffman tree,
+ * generate Huffman codes, encode and decode text using Huffman codes.
+ */
 public class Huffman {
     private Node root;
     private final String text;
@@ -10,6 +15,11 @@ public class Huffman {
     private final Map<Character, String> huffmanCodes;
     private Map<Character, Integer> frequencyMap;
 
+    /**
+     * Constructs a Huffman object with the given text.
+     * 
+     * @param text the input text to be encoded using Huffman coding
+     */
     public Huffman(String text) {
         this.text = text;
         fillCharFrequenciesMap();
