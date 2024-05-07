@@ -2,9 +2,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Driver {
@@ -16,6 +16,7 @@ public class Driver {
             System.out.println("Seleccione una opción:");
             System.out.println("1 - Comprimir");
             System.out.println("2 - Descomprimir");
+            System.out.println("3 - Generar archivo de tabla de frecuencias");
             System.out.println("0 - Salir");
 
             int option = scanner.nextInt();
@@ -105,34 +106,29 @@ public class Driver {
                     break;
 
                 case 3:
-                    // Mostrar tabla de frecuencias
+                    // Generar archivo de tabla de frecuencias
                     try {
-                        // Convertir el archivo de texto a una cadena
                         TxtToStringConverter converter = new TxtToStringConverter();
                         String text = converter.readFileToString("./src/texto_prueba.txt");
 
-                        // Codificar el texto usando Huffman
+                        // Generar el mapa de frecuencias con Huffman
                         Huffman huffman = new Huffman(text);
-                        String huffmanCode = huffman.encode();
-                        int frecuencias[] = new int[256];
-                        for (int i = 0; i < huffmanCode.length(); i++) {
-                            frecuencias[huffmanCode.charAt(i)]++;
-                        }
-                        generateTreeFile(frecuencias, "./src/frecuencias.txt");
-                        System.out.println("Archivo de frecuencias creado con éxito.");
+                        Map<Character, Integer> frequencyTable = huffman.generateFrequencyTable(text);
+
+                        // Escribir el archivo de tabla de frecuencias
+                        FrequencyTableWriter writer = new FrequencyTableWriter();
+                        writer.writeFrequencyTable(frequencyTable, "./src/frequency_table.txt");
+
+                        System.out.println("Archivo de tabla de frecuencias creado con éxito.");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     break;
-
-                    // Mostrar tabla de frecuencias
-                    
-                    
-                
                 case 0:
                     // Salir del programa
                     exit = true;
                     break;
+
                 default:
                     System.out.println("Opción no válida. Inténtelo de nuevo.");
                     break;
@@ -141,15 +137,5 @@ public class Driver {
 
         scanner.close();
         System.out.println("Programa terminado.");
-    }
-
-    private static void generateTreeFile(int[] frequencies, String filePath) throws IOException {
-        try (PrintWriter writer = new PrintWriter(filePath)) {
-            for (int i = 0; i < frequencies.length; i++) {
-                if (frequencies[i] > 0) {
-                    writer.println((char) i + ": " + frequencies[i]);
-                }
-            }
-        }
     }
 }

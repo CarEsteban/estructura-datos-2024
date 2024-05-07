@@ -33,6 +33,17 @@ public class Huffman {
         for (Map.Entry<Character, Integer> entry : frequencyMap.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+    }    
+    
+    public Map<Character, Integer> generateFrequencyTable(String text) {
+        Map<Character, Integer> frequencyTable = new HashMap<>();
+
+        // Recorre cada carácter en el texto y cuenta sus ocurrencias
+        for (char c : text.toCharArray()) {
+            frequencyTable.put(c, frequencyTable.getOrDefault(c, 0) + 1);
+        }
+
+        return frequencyTable;
     }
 
     // Método para construir el mapa de frecuencias de caracteres
