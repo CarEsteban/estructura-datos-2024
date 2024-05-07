@@ -13,14 +13,14 @@ public class Main {
             Huffman huffman = new Huffman(text);
 
             huffman.printFrequencies(); // Este método debería existir en tu clase Huffman
-
+/* 
             // Codifica el texto utilizando el árbol de Huffman
             String encodedText = huffman.encode();
             System.out.println("Texto codificado: " + encodedText);
 
             // Imprime los códigos generados para cada carácter
             huffman.printCodes();
-/* 
+
             // Decodifica el texto codificado de regreso a su forma original
             String originalText = huffman.decode(encodedText);
             System.out.println("Texto original: " + originalText);   */
