@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 // Posibles paths: HTD9\src\texto_prueba.txt
 //                 ./src/texto_prueba.txt
+//                 HTD9\src\output.huff
+//                 ./src/output.huff
 public class Driver {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
