@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+
+// Posibles paths: HTD9\src\texto_prueba.txt
+//                 ./src/texto_prueba.txt
 public class Driver {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
