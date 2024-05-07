@@ -85,8 +85,12 @@ public class Driver {
                                 bitString.append(byteBits);
                             }
 
+                            // Convertir el archivo de texto a una cadena
+                            TxtToStringConverter converter = new TxtToStringConverter();
+                            String text = converter.readFileToString("./src/texto_prueba.txt");
+                        
                             // Decodificar el texto original con el método de Huffman
-                            Huffman huffman = new Huffman();
+                            Huffman huffman = new Huffman(text);
                             String originalText = huffman.decode(bitString.toString());
 
                             // Mostrar el texto original
