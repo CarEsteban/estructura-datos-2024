@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,7 +68,34 @@ public class Driver {
                     if (!huffFile.exists()) {
                         System.out.println("No se encontró el archivo 'output.huff'. Por favor, comprime un archivo primero.");
                     } else {
-                        // Aquí puedes agregar el código de descompresión.
+                        try {
+                            // Leer el archivo binario
+                            FileInputStream fis = new FileInputStream(huffFile);
+                            List<Integer> bytesList = new ArrayList<>();
+                            int value;
+                            while ((value = fis.read()) != -1) {
+                                bytesList.add(value + 128);
+                            }
+                            fis.close();
+
+                            // Convertir bytes a cadena de bits
+                            StringBuilder bitString = new StringBuilder();
+                            for (int byteValue : bytesList) {
+                                String byteBits = String.format("%8s", Integer.toBinaryString(byteValue & 0xFF)).replace(' ', '0');
+                                bitString.append(byteBits);
+                            }
+
+                            // Decodificar el texto original con el método de Huffman
+                            Huffman huffman = new Huffman();
+                            String originalText = huffman.decode(bitString.toString());
+
+                            // Mostrar el texto original
+                            System.out.println("Texto descomprimido: ");
+                            System.out.println(originalText);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                     break;
 
