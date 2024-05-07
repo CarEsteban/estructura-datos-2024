@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-public class Main {
+public class Driver {
     public static void main(String[] args) {
         // Ruta al archivo de texto
         String filePath = "./src/texto_prueba.txt";
