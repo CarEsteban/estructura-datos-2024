@@ -73,8 +73,12 @@ public class Driver {
                 case 2:
                     // Descomprimir
                     File huffFile = new File("./src/output.huff");
+                    File freqTableFile = new File("./src/frequency_table.txt");
+
                     if (!huffFile.exists()) {
                         System.out.println("No se encontró el archivo 'output.huff'. Por favor, comprime un archivo primero.");
+                    } else if (!freqTableFile.exists()) {
+                        System.out.println("No se encontró el archivo 'frequency_table.txt'. Por favor, genere la tabla de frecuencias primero.");
                     } else {
                         try {
                             // Leer el archivo binario
