@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +104,13 @@ public class Driver {
                             // Mostrar el texto original
                             System.out.println("Texto descomprimido: ");
                             System.out.println(originalText);
+
+                            // Escribir el texto descomprimido en un archivo
+                            try (FileWriter writer = new FileWriter("./src/descomprimido.txt")) {
+                                writer.write(originalText);
+                            }
+
+                            System.out.println("Archivo 'descomprimido.txt' creado con éxito.");
 
                         } catch (IOException e) {
                             e.printStackTrace();
