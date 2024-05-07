@@ -3,6 +3,7 @@ import java.io.IOException;
 public class Driver {
     public static void main(String[] args) {
         // Ruta al archivo de texto
+        //String filePath = "HTD9\\src\\texto_prueba.txt";
         String filePath = "./src/texto_prueba.txt";
 
         try {
