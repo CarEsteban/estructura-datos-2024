@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -56,6 +57,9 @@ public class Driver {
                             }
                         }
 
+                        // Generar archivo .tree con las frecuencias
+                        generateTreeFile(huffman.getFrequencies(), "./src/output.tree");
+
                         System.out.println("Archivo .huff creado con éxito.");
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -103,11 +107,16 @@ public class Driver {
                     }
                     break;
 
+                case 3:
+                    int frecuencias[] = huffman.getFrequencies();
+                    // Mostrar tabla de frecuencias
+                    generateTreeFile(frecuencias, "./src/output.tree");
+                    
+                
                 case 0:
                     // Salir del programa
                     exit = true;
                     break;
-
                 default:
                     System.out.println("Opción no válida. Inténtelo de nuevo.");
                     break;
@@ -116,5 +125,15 @@ public class Driver {
 
         scanner.close();
         System.out.println("Programa terminado.");
+    }
+
+    private static void generateTreeFile(int[] frequencies, String filePath) throws IOException {
+        try (PrintWriter writer = new PrintWriter(filePath)) {
+            for (int i = 0; i < frequencies.length; i++) {
+                if (frequencies[i] > 0) {
+                    writer.println((char) i + ": " + frequencies[i]);
+                }
+            }
+        }
     }
 }
