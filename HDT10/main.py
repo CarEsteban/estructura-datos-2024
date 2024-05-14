@@ -2,7 +2,7 @@ from func import *
 
 
 def main():
-    graph = read_graph_from_file("logistica.txt")
+    graph = read_graph_from_file("HDT10\logistica.txt")
     while True:
         print("\n Opciones:")
         print("1. Encontrar la ruta mas corta entre 2 ciuidades")

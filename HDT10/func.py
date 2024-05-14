@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 class Graph:
     def __init__(self, vertices):
@@ -17,16 +18,15 @@ class Graph:
         return dist
 
 def read_graph_from_file(filename):
-    with open(filename, 'r') as file:
-        lines = file.readlines()
-    num_cities = len(lines)
+    df = pd.read_csv(filename, sep=" ", header=0)
+    cities = list(set(df["Ciudad1"].tolist() + df["Ciudad2"].tolist()))
+    num_cities = len(cities)
     graph = Graph(num_cities)
-    for line in lines:
-        data = line.split()
-        city1, city2 = data[0], data[1]
-        times = list(map(int, data[2:]))
+    for index, row in df.iterrows():
+        city1, city2 = row["Ciudad1"], row["Ciudad2"]
+        times = [row["tiempoNormal"], row["tiempoLluvia"], row["tiempoNieve"], row["tiempoTormenta"]]
         graph.add_edge(cities.index(city1), cities.index(city2), times)
-    return graph
+    return graph, cities
 
 def print_adjacency_matrix(graph):
     print("Adjacency Matrix:")
@@ -35,13 +35,18 @@ def print_adjacency_matrix(graph):
 
 def print_shortest_path(graph, city1, city2):
     print("Shortest Path from", city1, "to", city2)
-    print("Normal Time:", graph.graph[city1][city2][0])
-    print("Rainy Time:", graph.graph[city1][city2][1])
-    print("Snowy Time:", graph.graph[city1][city2][2])
-    print("Storm Time:", graph.graph[city1][city2][3])
+    print("Normal Time:", graph.graph[city1][city2])
 
 def calculate_center_of_graph(graph):
     distances = graph.floyd_warshall()
     eccentricities = [max(row) for row in distances]
     center_index = eccentricities.index(min(eccentricities))
     return center_index
+
+# Lectura del archivo y construcción del grafo
+graph, cities = read_graph_from_file("HDT10\logistica.txt")
+
+# Prueba de las funciones
+print_adjacency_matrix(graph)
+print_shortest_path(graph, 0, 1)
+print("Center of the graph:", cities[calculate_center_of_graph(graph)])
