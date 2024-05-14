@@ -1,28 +1,31 @@
+from func import *
+cities = ["BuenosAires", "SaoPaulo", "Lima", "Quito"]
+
 def main():
     graph = read_graph_from_file("logistica.txt")
     while True:
-        print("\nOptions:")
-        print("1. Find shortest path between two cities")
-        print("2. Calculate center of the graph")
-        print("3. Modify the graph")
-        print("4. Exit")
-        option = int(input("Enter your choice: "))
+        print("\n Opciones:")
+        print("1. Encontrar la ruta mas corta entre 2 ciuidades")
+        print("2. Calcular el centro del grafo")
+        print("3. Modificar el grafo")
+        print("4. Salir")
+        option = int(input("Ingrese una opción: "))
         
         if option == 1:
-            city1 = cities.index(input("Enter origin city: "))
-            city2 = cities.index(input("Enter destination city: "))
+            city1 = cities.index(input("Ingrese la ciudad de origen: "))
+            city2 = cities.index(input("Ingrese la ciudad de destino: "))
             print_shortest_path(graph, city1, city2)
         elif option == 2:
             center_index = calculate_center_of_graph(graph)
-            print("The center of the graph is:", cities[center_index])
+            print("El centro del grafo es:", cities[center_index])
         elif option == 3:
-            # Implement graph modification options
+            
             pass
         elif option == 4:
-            print("Exiting program...")
+            print("Saliendo del programa")
             break
         else:
-            print("Invalid option. Please try again.")
+            print("Opcion invalida, intente de nuevo.")
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 import numpy as np
-
+cities = ["BuenosAires", "SaoPaulo", "Lima", "Quito"]
 class Graph:
     def __init__(self, vertices):
         self.V = vertices
