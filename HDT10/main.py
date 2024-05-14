@@ -1,5 +1,5 @@
 from func import *
-cities = ["BuenosAires", "SaoPaulo", "Lima", "Quito"]
+
 
 def main():
     graph = read_graph_from_file("logistica.txt")

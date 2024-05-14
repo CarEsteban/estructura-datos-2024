@@ -1,19 +1,4 @@
-A logistics company that ships goods to different locations via a network of warehouses needs to optimize its supply chain to
-reduce transportation costs and improve delivery times. The company currently uses a simple routing system based on the
-shortest distance between two points2. However, this approach does not take into account traffic congestion, weather
-conditions, or other factors that may impact the delivery time and cost.
-¡Aquí es donde entra usted! No fue en valde estudiar tantas cosas en Algoritmos y Estructura de Datos, principalmente el
-algoritmo de Floyd para calcular la ruta más corta entre cualquier par de nodos. Using Floyd's algorithm, the company was able
-to create a more optimized routing system that takes into account various factors such as traffic congestion, weather conditions,
-and delivery schedules. The algorithm allows the company to quickly determine the shortest path between any two points in the
-network, factoring in all relevant variables.
-In order to use Floyd's algorithm to optimize the supply chain taking into account distance and weather conditions, we can use
-a weighted graph where each node represents a location in the supply chain (e.g. warehouse, distribution center, etc.) and the
-edges between nodes represent the distance between them, taking into account the impact of weather conditions on travel
-time.
-For example, we could use historical data on travel times between locations during different weather conditions (such as rain,
-snow, or wind) to estimate the impact of weather on travel time. We could then assign a weight to each edge based on the
-distance between the two locations and the estimated impact of weather on travel time.
-It is important to note that the weights assigned to each edge would need to be updated regularly to reflect changes in weather
-conditions and traffic patterns. The company could use real-time data on traffic and weather conditions to adjust the weights in
-the adjacency matrix on a regular basis, ensuring that the routing system is always optimized for the current conditions.
+Ciudad1 Ciudad2 tiempoNormal tiempoLluvia tiempoNieve tiempoTormenta
+BuenosAires SaoPaulo 10 15 20 50
+BuenosAires Lima 15 20 30 70
+Lima Quito 10 12 15 20
